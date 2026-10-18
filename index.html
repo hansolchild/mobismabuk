@@ -4,14 +4,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>현대모비스마북어린이집 석식 신청</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <style>
-    html, body { margin: 0; height: 100%; background: #f8fafc; }
-    iframe { display: block; width: 100%; height: 100%; border: 0; }
+    html, body { margin: 0; height: 100%; background: #f8fafc; font-family: 'Pretendard Variable', Pretendard, sans-serif; }
+    body { display: flex; flex-direction: column; }
+    .bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+           padding: 6px 12px; background: #fffbeb; border-bottom: 1px solid #fcd34d; font-size: 12px; color: #78350f; }
+    .bar a { flex: none; padding: 5px 10px; border-radius: 8px; background: #f59e0b; color: #fff; font-weight: 700; text-decoration: none; }
+    iframe { flex: 1; display: block; width: 100%; border: 0; }
   </style>
 </head>
 <body>
-   <iframe src="https://script.google.com/macros/s/AKfycbwapic08de-zCDncYhc83R8PtpLzDWqz8Cm7ak7VcfMo5m2kcxBzkZGGtmRB21x2epp/exec"
-          title="석식 통합관리 시스템"
-          allow="clipboard-write"></iframe>
+  <!-- 화면이 "연결을 거부했습니다"로 나오거나 인쇄가 안 될 때 사용할 수 있는 직접 접속 링크 -->
+  <div class="bar">
+    <span>화면이 보이지 않거나 인쇄가 되지 않으면 →</span>
+    <a id="direct-link" href="#" target="_blank" rel="noopener">새 창에서 바로 열기</a>
+  </div>
+  <iframe id="app-frame" title="석식 통합관리 시스템" allow="clipboard-write"></iframe>
+
+  <script>
+    var APP_URL = 'https://script.google.com/macros/s/AKfycbwapic08de-zCDncYhc83R8PtpLzDWqz8Cm7ak7VcfMo5m2kcxBzkZGGtmRB21x2epp/exec';
+
+    // 주소 뒤에 ?diag=1 을 붙여 깃허브 페이지에 접속하면 연결 진단 화면이 iframe 안에 표시됩니다.
+    var diag = /[?&]diag=1/.test(location.search);
+    document.getElementById('app-frame').src = APP_URL + (diag ? '?diag=1' : '');
+    document.getElementById('direct-link').href = APP_URL;
+  </script>
 </body>
 </html>

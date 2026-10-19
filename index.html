@@ -5,39 +5,96 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>현대모비스마북어린이집 석식 신청</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  
   <style>
-    html, body { margin: 0; height: 100%; background: #f8fafc; font-family: 'Pretendard Variable', Pretendard, sans-serif; }
-    body { display: flex; flex-direction: column; }
-    .bar { flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px;
-           padding: 6px 12px; background: #fffbeb; border-bottom: 1px solid #fcd34d; font-size: 12px; color: #78350f; }
-    .bar a { flex: none; padding: 5px 10px; border-radius: 8px; background: #f59e0b; color: #fff; font-weight: 700; text-decoration: none; }
-    iframe { flex: 1; display: block; width: 100%; border: 0; }
+    /* 기본 레이아웃 스타일 설정 */
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #f8fafc;
+      font-family: 'Pretendard Variable', Pretendard, sans-serif;
+      /* CSS를 통한 텍스트 드래그 및 선택 차단 */
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bar {
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 12px;
+      background: #fffbeb;
+      border-bottom: 1px solid #fcd34d;
+      font-size: 12px;
+      color: #78350f;
+    }
+
+    .bar a {
+      flex: none;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: #f59e0b;
+      color: #fff;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    iframe {
+      flex: 1;
+      display: block;
+      width: 100%;
+      border: 0;
+    }
   </style>
-   <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; /* 이중 스크롤 방지 */
-            background-color: #f4f5f7; /* 배경색 (필요시 수정) */
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-    </style>
 </head>
 <body>
   <iframe id="app-frame" title="석식 통합관리 시스템" allow="clipboard-write"></iframe>
 
   <script>
-    var APP_URL = 'https://script.google.com/macros/s/AKfycbwapic08de-zCDncYhc83R8PtpLzDWqz8Cm7ak7VcfMo5m2kcxBzkZGGtmRB21x2epp/exec';
+    // 1. 마우스 오른쪽 클릭(컨텍스트 메뉴) 차단
+    document.addEventListener('contextmenu', function (event) {
+      event.preventDefault();
+    }, false);
 
+    // 2. 추가적인 드래그 방지
+    document.addEventListener('dragstart', function (event) {
+      event.preventDefault();
+    }, false);
+
+    // 3. 주요 단축키 차단 (F12 개발자 도구, 소스 보기 Ctrl+U)
+    document.addEventListener('keydown', function (event) {
+      // F12 키 차단
+      if (event.key === 'F12' || event.keyCode === 123) {
+        event.preventDefault();
+      }
+      // Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U 차단
+      if (event.ctrlKey && (event.key === 'u' || event.key === 'U' || (event.shiftKey && (event.key === 'I' || event.key === 'J')))) {
+        event.preventDefault();
+      }
+    });
+
+    // 앱 URL 로딩 및 파라미터 처리
+    var APP_URL = 'https://script.google.com/macros/s/AKfycbwapic08de-zCDncYhc83R8PtpLzDWqz8Cm7ak7VcfMo5m2kcxBzkZGGtmRB21x2epp/exec';
     var diag = /[?&]diag=1/.test(location.search);
-    document.getElementById('app-frame').src = APP_URL + (diag ? '?diag=1' : '');
-    document.getElementById('direct-link').href = APP_URL;
+    
+    var appFrame = document.getElementById('app-frame');
+    if (appFrame) {
+      appFrame.src = APP_URL + (diag ? '?diag=1' : '');
+    }
+
+    var directLink = document.getElementById('direct-link');
+    if (directLink) {
+      directLink.href = APP_URL;
+    }
   </script>
 </body>
 </html>
